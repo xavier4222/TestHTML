@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HOWMAL Chart</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script>/*
+        function countOccurance(arr) {
+            var a = [], b = [], prev;
+
+            arr.sort();
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] !== prev) {
+                    a.push(arr[i]);
+                    b.push(1);
+                } else {
+                    b[b.length - 1]++;
+                }
+                prev = arr[i];
+            }
+
+            return [a, b];
+        }*/
+
+        function countHOWMAL(arr) {
+            var c20 = 0, c70 = 0, c127 = 0, c170 = 0, c190 = 0, c230 = 0, c381 = 0, c651 = 0, c780 = 0, c757 = 0,
+                c799 = 0, c800 = 0, c801 = 0, c865 = 0;
+
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == 20) c20++;
+                if (arr[i] == 70) c70++;
+                if (arr[i] == 127) c127++;
+                if (arr[i] == 170) c170++;
+                if (arr[i] == 190) c190++;
+                if (arr[i] == 230) c230++;
+                if (arr[i] == 381) c381++;
+                if (arr[i] == 651) c651++;
+                if (arr[i] == 780) c780++;
+                if (arr[i] == 757) c757++;
+                if (arr[i] == 799) c799++;
+                if (arr[i] == 800) c800++;
+                if (arr[i] == 801) c801++;
+                if (arr[i] == 865) c865++;
+            }
+
+            var returnArr = [c20, c70, c127, c170, c190, c230, c381, c651, c780, c757, c799, c800, c801, c865];
+            return returnArr;
+        }
+
+        function createChart(label, id, name1, arr1, name2, arr2, name3, arr3, name4, arr4, name5, arr5) {
+            var ctx = document.getElementById(id);
+
+            var occ1 = countHOWMAL(arr1);
+            var occ2 = countHOWMAL(arr2);
+            var occ3 = countHOWMAL(arr3);
+            var occ4 = countHOWMAL(arr4);
+            var occ5 = countHOWMAL(arr5);
+
+            var bg1 = [], bg2 = [], bg3 = [], bg4 = [], bg5 = [];
+            var bc1 = [], bc2 = [], bc3 = [], bc4 = [], bc5 = [];
+            for (var i = 0; i < arr1.length; i++) { bg1[i] = 'rgba(255, 99, 132, 0.2)'; bc1[i] = 'rgba(204,51,102,0.8)' };
+            for (var i = 0; i < arr2.length; i++) { bg2[i] = 'rgba(54, 162, 235, 0.2)'; bc2[i] = 'rgba(54, 162, 235, 1)' };
+            for (var i = 0; i < arr3.length; i++) { bg3[i] = 'rgba(255, 206, 86, 0.2)'; bc3[i] = 'rgba(255, 206, 86, 1)' };
+            for (var i = 0; i < arr4.length; i++) { bg4[i] = 'rgba(75, 192, 192, 0.2)'; bc4[i] = 'rgba(75, 192, 192, 1)' };
+            for (var i = 0; i < arr5.length; i++) { bg5[i] = 'rgba(153, 102, 255, 0.2)'; bc5[i] = 'rgba(153, 102, 255, 1)' };
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: label,
+                    datasets: [{
+                        label: name1,
+                        data: occ1,
+                        backgroundColor: bg1,
+                        borderColor: bc1,
+                        borderWidth: 1
+                    }, {
+                        label: name2,
+                        borderWidth: 1,
+                        data: occ2,
+                        backgroundColor: bg2,
+                        borderColor: bc2,
+                        borderWidth: 1
+                    }, {
+                        label: name3,
+                        borderWidth: 1,
+                        data: occ3,
+                        backgroundColor: bg3,
+                        borderColor: bc3,
+                        borderWidth: 1
+                    }, {
+                        label: name4,
+                        borderWidth: 1,
+                        data: occ4,
+                        backgroundColor: bg4,
+                        borderColor: bc4,
+                        borderWidth: 1
+                    },
+                    {
+                        label: name5,
+                        borderWidth: 1,
+                        data: occ5,
+                        backgroundColor: bg5,
+                        borderColor: bc5,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    </script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="wrapper">
+        <h1 style="text-align: center; color: #7c7c7c; font-family: Arial">HOWMAL Chart</h1>
+        <canvas id="HWMALChart" width="1600" height="700"></canvas>
+    </div>
+    <script>
+        arr1 = [70, 799, 190, 190, 70, 20, 20, 780, 170, 190, 865, 865, 20, 20, 799, 70, 799, 190, 170, 190, 20, 780, 799,
+            799, 190, 800, 190, 190, 865, 70, 190, 190, 190, 230, 190, 780, 20, 799, 865, 20, 190, 190, 799, 230, 230, 865,
+            20, 799, 799, 190, 20, 780, 800, 865, 865, 190, 799, 799, 190, 20, 20, 190, 190, 190, 20, 190, 780, 799, 865, 20,
+            70, 799, 190, 190, 20, 20, 799, 230, 190, 190, 190, 190, 799, 799, 190, 190, 20, 799, 190, 20, 190, 865, 190, 20,
+            865, 865, 651, 799, 190, 865, 20, 190, 190, 190, 70, 70, 651, 381, 190, 190, 20, 799, 20, 190, 190, 190, 190, 190,
+            20, 190, 190, 190, 20, 20, 799, 190, 20, 381, 190, 190, 190, 190, 20, 170, 190, 70, 70, 20, 799, 70, 799, 799, 799,
+            799, 127, 20, 20, 127, 20, 799, 799, 799, 799, 801, 801, 801, 801, 801, 801, 801, 801, 801, 801, 801, 801];
+        arr2 = [799, 190, 70, 70, 70, 70, 70, 20, 70, 20, 20, 70, 70, 20, 20, 799, 20, 20, 20, 20, 799, 190, 799, 190, 799, 70,
+            20, 799, 190, 190, 20, 190, 190, 70, 651, 799, 799, 190, 190, 20, 780, 780, 780, 70, 190, 190, 20, 20, 20, 20, 190,
+            190, 20, 190, 190, 20, 865, 190, 70, 70, 20, 190, 190, 20, 190, 20, 190, 190, 780, 190, 190, 20, 190, 190, 70, 20,
+            190, 70, 20, 20, 20, 865, 190, 190, 381, 20, 20, 20, 70, 70, 20, 20, 20, 20, 20, 20, 70, 20, 799, 799, 20, 799, 190,
+            20, 70];
+        arr3 = [20, 20, 190, 190, 190, 190, 865, 190, 757, 799, 799, 20, 70, 799, 799];
+        arr4 = [20, 20, 20, 20, 70, 20, 190, 20, 20, 20, 20, 20, 190, 190, 20, 170, 127, 70, 70, 20, 190, 20];
+        arr5 = [190, 190, 70, 70, 20, 20, 20, 20, 20, 20, 20, 799, 70, 20, 799, 799, 70, 780, 20, 20, 20, 190, 190, 799, 20, 799,
+            780, 780, 780, 20, 799, 381, 20, 20, 799, 651, 20, 381, 20, 190, 190, 20, 20, 799, 799, 190, 70, 20];
+
+        createChart(["20", "70", "127", "170", "190", "230", "381", "651", "780", "757", "799", "800", "801", "865"], "HWMALChart", "Barksdale WEC", arr1, "Minot WEC", arr2, "Robins GG3", arr3, "Robins WEC", arr4, "Whiteman WEC", arr5);
+        
+    </script>
+</body>
+</html>
